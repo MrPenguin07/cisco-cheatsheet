@@ -125,6 +125,51 @@ R1# show history
 
 ```
 
+# Types of VLan
+
+Default VLAN
+
+Data VLAN
+
+Native VLAN
+
+Management VLAN
+
+Voice VLAN
+
+# data voice vlan 
+
+```
+
+Data and Voice VLAN Example
+Use the switchport voice vlan vlan-id interface configuration command to assign a voice VLAN to a port.
+
+LANs supporting voice traffic typically also have quality of service (QoS) enabled. Voice traffic must be labeled as trusted as soon as it enters the network. Use the mls qos trust [cos | device cisco-phone | dscp | ip-precedence] interface configuration command to set the trusted state of an interface, and to indicate which fields of the packet are used to classify traffic.
+
+The configuration in the example creates the two VLANs (i.e., VLAN 20 and VLAN 150) and then assigns the F0/18 interface of S3 as a switchport in VLAN 20. It also assigns voice traffic to VLAN 150 and enables QoS classification based on the class of service (CoS) assigned by the IP phone.
+
+S3(config)# vlan 20
+S3(config-vlan)# name student
+S3(config-vlan)# vlan 150
+S3(config-vlan)# name VOICE
+S3(config-vlan)# exit
+S3(config)# interface fa0/18
+S3(config-if)# switchport mode access
+S3(config-if)# switchport access vlan 20
+S3(config-if)# mls qos trust cos
+S3(config-if)# switchport voice vlan 150
+S3(config-if)# end
+S3#
+Note: The implementation of QoS is beyond the scope of this course.
+
+The switchport access vlan command forces the creation of a VLAN if it does not already exist on the switch. For example, VLAN 30 is not present in the show vlan brief output of the switch. If the switchport access vlan 30 command is entered on any interface with no previous configuration, then the switch displays the following:
+
+% Access VLAN does not exist. Creating vlan 30 
+
+```
+
+
+
 
 
 
