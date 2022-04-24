@@ -1,3 +1,136 @@
+
+The knowledge that earth's collected since birth from iota to complex organism is now mine.
+
+
+Never interrupt an enemy when he is doing a mistake
+
+Napoleon Bonaparte.
+
+
+
+---- Comandos a agregar
+
+Hasta hace poco, se requerían determinados tipos de cable (cruzado o directo) para conectar dispositivos, bla bla:
+
+mdix
+
+S1(config-if)# mdix auto
+
+S1# show controllers ethernet-controller fa0/1 phy | include MDIX
+ Auto-MDIX           :  On   [AdminState=1   Flags=0x00052248]
+
+---
+
+section
+
+Filter Show Command Output
+
+Shows the entire section that starts with the filtering expression, as shown in the example.
+
+To enable the filtering command, enter a pipe (|) character after the show command and then enter a filtering parameter and a filtering expression.
+
+```
+
+R1# show running-config | section line vty
+line vty 0 4
+ password 7 110A1016141D
+ login
+ transport input all
+ 
+```
+
+- Includes and Excludes all output lines that match the filtering expression:
+
+```
+R1# show ip interface brief
+Interface              IP-Address      OK? Method Status                Protocol
+GigabitEthernet0/0/0   192.168.10.1    YES manual up                    up
+GigabitEthernet0/0/1   192.168.11.1    YES manual up                    up
+Serial0/1/0            209.165.200.225 YES manual up                    up
+Serial0/1/1            unassigned      NO  unset  down                  down
+R1#
+
+
+R1# show ip interface brief | include up
+GigabitEthernet0/0/0   192.168.10.1    YES manual up                    up
+GigabitEthernet0/0/1   192.168.11.1    YES manual up                    up
+Serial0/1/0            209.165.200.225 YES manual up                    up
+
+```
+
+
+```
+R1# show ip interface brief
+Interface              IP-Address      OK? Method Status                Protocol
+GigabitEthernet0/0/0   192.168.10.1    YES manual up                    up
+GigabitEthernet0/0/1   192.168.11.1    YES manual up                    up
+Serial0/1/0            209.165.200.225 YES manual up                    up
+Serial0/1/1            unassigned      NO  unset  down                  down
+R1#
+
+
+R1# show ip interface brief | exclude unassigned
+Interface              IP-Address      OK? Method Status                Protocol
+GigabitEthernet0/0/0   192.168.10.1    YES manual up                    up
+GigabitEthernet0/0/1   192.168.11.1    YES manual up                    up
+Serial0/1/0            209.165.200.225 YES manual up                    up
+
+```
+
+- begin
+
+```
+
+R1# show ip route | begin Gateway
+Gateway of last resort is not set
+      192.168.10.0/24 is variably subnetted, 2 subnets, 2 masks
+C        192.168.10.0/24 is directly connected, GigabitEthernet0/0/0
+L        192.168.10.1/32 is directly connected, GigabitEthernet0/0/0
+      192.168.11.0/24 is variably subnetted, 2 subnets, 2 masks
+C        192.168.11.0/24 is directly connected, GigabitEthernet0/0/1
+L        192.168.11.1/32 is directly connected, GigabitEthernet0/0/1
+      209.165.200.0/24 is variably subnetted, 2 subnets, 2 masks
+C        209.165.200.224/30 is directly connected, Serial0/1/0
+L        209.165.200.225/32 is directly connected, Serial0/1/0
+
+```
+
+- Command history 
+
+```
+
+R1# terminal history size 200
+R1# show history
+  show ip int brief
+  show interface g0/0/0
+  show ip route
+  show running-config
+  show history
+  terminal history size 200
+
+```
+
+
+```
+R1# terminal history size 200
+
+R1# show history
+  show ip int brief
+  show interface g0/0/0
+  show ip route
+  show running-config
+  show history
+  terminal history size 200
+
+
+```
+
+
+
+
+
+
+
 # Cisco Cheetsheet
 
 **Cisco CLI Reference, Howtos, and Tools**
