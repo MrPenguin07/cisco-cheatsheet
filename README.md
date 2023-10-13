@@ -13,13 +13,23 @@ Credit to original author; and expanded upon by @MrPenguin07
 - [ ] ZBF
 - [ ] BGP
 - [ ] RIPv2
+- [ ] GRE/IPSEC
 - [ ] SPAN
 - [ ] HSRP/GLBP
 - [ ] SNMP
+- [ ] Diagnosing issues w/ `show` | `cdp` etc 
+- [ ] VOIP
+- [ ] tFTP
+
+- [ ] Backup/Restore configs & firmware
+- [ ] Useful commands;
+- `# line con 0` && `# logging synchronous`
+- `# no ip domain-lookup`
 - etc
   
 ***Expand on existing sections***
 - [ ] Routing
+- [ ] DHCP - `ip helper-address`
 - etc
 
 ## Quick Navigtation
