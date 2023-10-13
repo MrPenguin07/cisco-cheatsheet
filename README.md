@@ -1,8 +1,26 @@
-# Cisco Cheetsheet
-
+# Cisco Cheatsheet
 **Cisco CLI Reference, Howtos, and Tools**
 
-_Warning, use at your own risk. I created these scripts with an educational mindset while studying for my CCNA_
+Credit to original author; and expanded upon by @MrPenguin07
+
+## To-do
+- [ ] Finalize & add cisco-send.py
+
+<sup>(script to set up stty, read local config & send to cisco device over serial, line by line with delay to avoid large config copy-paste failing)</sup>
+
+***Add new sections***
+- [ ] Syslog
+- [ ] ZBF
+- [ ] BGP
+- [ ] RIPv2
+- [ ] SPAN
+- [ ] HSRP/GLBP
+- [ ] SNMP
+- etc
+  
+***Expand on existing sections***
+- [ ] Routing
+- etc
 
 ## Quick Navigtation
 
