@@ -5,7 +5,7 @@ Credit to the original author [@grplyler](https://github.com/grplyler)
 Expanded upon by [@MrPenguin07](https://github.com/MrPenguin07)
 
 ## To-do
-- [ ] Finalize & add cisco-send.py
+- [X] Finalize & add cisco-send.py
 
 <sup>(script to set up stty, read local config & send to cisco device over serial, line by line with delay to avoid large config copy-paste failing)</sup>
 
