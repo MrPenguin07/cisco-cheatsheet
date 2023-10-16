@@ -11,7 +11,7 @@ Credit to original author; and expanded upon by @MrPenguin07
 ***Add new sections***
 - [ ] Syslog
 - [ ] ZBF
-- [ ] BGP
+- [X] BGP
 - [ ] RIPv2
 - [ ] GRE/IPSEC
 - [ ] SPAN
@@ -153,6 +153,20 @@ Credit to original author; and expanded upon by @MrPenguin07
         * [Verify OSPF Protocols](#verify-ospf-protocols)
         * [Verify OSPF Process Info](#verify-ospf-process-info)
         * [Verify OSPF Interface Setting](#verify-ospf-interface-setting)
+    + [BGP](#bgp)
+      - [Basic BGP Configuration](#basic-bgp-configuration)
+        * [Enable BGP Process](#enable-bgp-process)
+        * [Define BGP Neighbor](#define-bgp-neighbor)
+      - [Viewing BGP Information](#viewing-bgp-information)
+        * [Show BGP Summary](#show-bgp-summary)
+        * [Show BGP Routing Table](#show-bgp-routing-table)
+      - [Advertising Networks](#advertising-networks)
+        * [Advertise Network](#advertise-network)
+      - [Configuring Route Aggregation](#configuring-route-aggregation)
+        * [Aggregate Routes](#aggregate-routes)
+      - [Redistribute Routes](#redistributing-routes)
+        * [Redistribute Static Routes](#redistribute-static-routes)
+        * [Reditribute OSPF Routes](#redistribute-ospf-routes)
   * [How To's](#how-tos)
     + [FTP Server Usage](#ftp-server-usage)
     + [Install Packet Tracer on Fedora Workstation](#install-packet-tracer-on-fedora-workstation)
@@ -1140,6 +1154,89 @@ int g0/0/1
 ip ospf dead-interval 100
 end
 ```
+### BGP
+
+#### Basic BGP Configuration
+
+##### Enable BGP Process
+```
+conf t
+router bgp <AS_number>
+bgp router-id <router_id>
+```
+Where `<AS_number>` is the Autonomous System number for the router and `<router_id>` is the desired router ID, typically formatted as an IP address.
+
+##### Define BGP Neighbor
+```
+conf t
+router bgp <AS_number>
+neighbor <neighbor_IP> remote-as <remote_AS_number>
+```
+Where `<neighbor_IP>` is the IP address of the BGP neighbor and `<remote_AS_number>` is the Autonomous System number of the BGP neighbor.
+
+#### Viewing BGP Information
+
+##### Show BGP Summary
+```
+show ip bgp summary
+```
+
+##### Show BGP Routing Table
+```
+show ip bgp
+```
+
+#### Advertising Networks
+
+##### Advertise Network
+```
+conf t
+router bgp <AS_number>
+network <network_address> mask <subnet_mask>
+```
+Where `<network_address>` is the network you want to advertise and `<subnet_mask>` is the subnet mask for the network.
+
+#### Configuring Route Aggregation
+
+##### Aggregate Routes
+```
+conf t
+router bgp <AS_number>
+aggregate-address <aggregate_address> <aggregate_mask>
+```
+Where `<aggregate_address>` is the summarized network address and `<aggregate_mask>` is the subnet mask for the summarized network.
+
+#### Redistributing Routes
+
+##### Redistribute Static Routes
+```
+conf t
+router bgp <AS_number>
+redistribute static
+```
+Where <AS_number> is the Autonomous System number for the router.
+
+##### Redistribute OSPF Routes
+```
+conf t
+router bgp <AS_number>
+redistribute ospf <process_id>
+```
+Where <AS_number> is the Autonomous System number for the router, and <process_id> is the OSPF process ID.
+
+##### Redistribute Connected Routes
+```
+conf t
+router bgp <AS_number>
+redistribute connected
+```
+Where <AS_number> is the Autonomous System number for the router.
+
+##### Verify Redistribution
+```
+show ip bgp
+```
+
 
 ## How To's
 
