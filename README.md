@@ -1,7 +1,8 @@
 # Cisco Cheatsheet
-**Cisco CLI Reference, Howtos, and Tools**
+### Cisco CLI Reference, Howtos, and Tools
 
-Credit to original author; and expanded upon by @MrPenguin07
+Credit to the original author [@grplyler](https://github.com/grplyler)  
+Expanded upon by [@MrPenguin07](https://github.com/MrPenguin07)
 
 ## To-do
 - [ ] Finalize & add cisco-send.py
