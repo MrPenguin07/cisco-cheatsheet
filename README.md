@@ -36,14 +36,14 @@ Expanded upon by [@MrPenguin07](https://github.com/MrPenguin07)
 ## Quick Navigtation
 
 ### Quick Snippets & Scripts
-  - [Intialize](#intialize)
-  - [Basic Config](#basic-config)
+  - [initialize](#initialize)
+  - [Basic Config](#setup)
   - [Assign Static IP to Interface](#assign-static-ip-to-interface)
   - [Snippet: Enable Router DHCP Server](#snippet-enable-router-dhcp-server)
   - [Snippet: Enable Switch DHCP Server](#snippet-enable-switch-dhcp-server)
   - [Nuking (ROMMON, Password Recovery, etc)](#nuking-rommon-password-recovery-etc)
   - [Howto: File Transfer Over Console (linux / xmodem)](#file-transfer-over-console-linux--xmodem)
-  - [Access Console over USB on Linux](#access-console-over-usb-on-linux)
+  - [Access Console over USB on Linux](#console-access-with-screen-on-linux)
 
   
 
@@ -58,20 +58,20 @@ Expanded upon by [@MrPenguin07](https://github.com/MrPenguin07)
     + [Etherchannel](#etherchannel)
     + [Dynamic Trunking Protocol (DTP)](#dtp-dynamic-trunking-protocol)
     + [Routing](#routing)
-    + [Spanning Tree Protocol](#spaning-tree-protocol)
+    + [Spanning Tree Protocol](#spanning-tree-protocol)
   * [Advanced Networking](#advanced-networking)
     + [OSPFv2](#ospfv2)
     + [BGP](#bgp)
   * [How To's](#how-tos)
     + [FTP Server Usage](#ftp-server-usage)
-    + [Access Console over USB on Linux](#access-console-over-usb-on-linux)
+    + [Access Console over USB on Linux](#console-access-with-screen-on-linux)
   * [Tools](#tools)
 
 ## Full Navigation
 
   * [Basic Networking](#basic-networking)
     + [Setup](#setup)
-      - [Intialize](#intialize)
+      - [initialize](#initialize)
       - [Basic Switch Config](#basic-switch-config)
       - [Basic Router Config](#basic-router-config)
       - [Basic Config with Password Security](#basic-config-with-password-security)
@@ -169,8 +169,18 @@ Expanded upon by [@MrPenguin07](https://github.com/MrPenguin07)
       - [Redistribute Routes](#redistributing-routes)
         * [Redistribute Static Routes](#redistribute-static-routes)
         * [Reditribute OSPF Routes](#redistribute-ospf-routes)
+    + [Spanning Tree Protocol (STP)](#spanning-tree-protocol)
+      - [Basic STP Configuration](basic-stp-configuration)
+        * [Enable STP](#enable-stp)
+        * [Set STP mode](#set-stp-mode)
+      - [STP Priority and Root Bridge Configuration](stp-priority-and-root-bridge-configuration)
+        * [Set Bridge priority](#set-bridge-priority)
+        * [Set Bridge priority for all VLANs](#set-bridge-priority-for-all-vlans)
+        * [Root Bridge Configuration](#root-bridge-configuration)
+      - [STP Verification and Troubleshooting](#stp-verification-and-troubleshooting)
   * [How To's](#how-tos)
     + [FTP Server Usage](#ftp-server-usage)
+    + [Sending Local Config over Serial](#sending-local-config-over-serial)
     + [Install Packet Tracer on Fedora Workstation](#install-packet-tracer-on-fedora-workstation)
     + [Console Access with `minicom` on Linux](#console-access-with-minicom-on-linux)
     + [Configure Serial Port with `stty` on Linux](#configure-serial-port-with-stty-on-linux)
@@ -185,7 +195,7 @@ Expanded upon by [@MrPenguin07](https://github.com/MrPenguin07)
 ### Setup
 ---
 
-#### Intialize
+#### initialize
 
 These commands wipe all config and reboot the device
 
@@ -890,6 +900,8 @@ show dtp interface gi0/1
 
 ## Advanced Networking
 
+### Routing
+
 ### OSPFv2
 
 #### OSPF Router IDs
@@ -1239,6 +1251,46 @@ Where <AS_number> is the Autonomous System number for the router.
 show ip bgp
 ```
 
+### Spanning Tree Protocol
+
+#### Basic STP Configuration
+##### Enable STP
+
+```
+conf t
+spanning-tree vlan <vlan_id>
+```
+Where <vlan_id> is the VLAN ID for which STP is being configured.
+
+##### Set STP Mode
+```
+spanning-tree mode { pvst | rapid-pvst | mst }
+```
+Choose pvst for Per-VLAN Spanning Tree, rapid-pvst for Rapid Per-VLAN Spanning Tree, or mst for Multiple Spanning Tree.
+
+#### STP Priority and Root Bridge Configuration
+##### Set Bridge Priority
+```
+spanning-tree vlan <vlan_id> priority <priority_value>
+```
+Where <vlan_id> is the VLAN ID, and <priority_value> is the priority value (0, 4096, 8192, 12288, ..., 61440).
+
+##### Set Bridge Priority for All VLANs
+```
+spanning-tree vlan 1-4094 priority <priority_value>
+```
+
+##### Root Bridge Configuration
+```
+spanning-tree vlan <vlan_id> root {primary|secondary}
+```
+This command configures the current switch as the root bridge for the specified VLAN.
+
+#### STP Verification and Troubleshooting
+`show spanning-tree`
+`show spanning-tree vlan <vlan_id>`
+`show spanning-tree interface <interface_type> <interface_number> detail`
+
 
 ## How To's
 
@@ -1418,13 +1470,21 @@ screen /dev/ttyS0 9600,cs8,parenb,-parodd,-cstopb,-hupcl
 
 See more details at [http://www.noah.org/wiki/Screen_notes](http://www.noah.org/wiki/Screen_notes)
 
+### Sending Local Config over Serial
+
+See [@MrPenguin](https://github.com/MrPenguin07)'s cisco-send repository;
+[cisco-send](https://github.com/MrPenguin07/cisco-send)
+
 ### Linux File Transfer Over Console (minicom / xmodem)
 
 _Howto comming soon!_
 
+
+
 ### Windows File Transfer Over Console ( HyperTerminal / xmodem)
 
-_Howto comming soon!_
+_Howto comming soon!_  
+(actually it won't, not by me, accepting PR heh)
 
 ## Tools
 
