@@ -206,7 +206,7 @@ delete vlan.dat
 reload
 ```
 
-**Note:** Remeber to say "no" to saving running config on reload. If you say yes, running config will be saved and you wont be working with fresh config on reload.
+**Note:** Remember to say "no" to saving running config on reload. If you say yes, running config will be saved and you wont be working with fresh config on reload.
 
 #### Basic Switch Config
 
