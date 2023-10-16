@@ -60,6 +60,7 @@ Credit to original author; and expanded upon by @MrPenguin07
     + [Spanning Tree Protocol](#spaning-tree-protocol)
   * [Advanced Networking](#advanced-networking)
     + [OSPFv2](#ospfv2)
+    + [BGP](#bgp)
   * [How To's](#how-tos)
     + [FTP Server Usage](#ftp-server-usage)
     + [Access Console over USB on Linux](#access-console-over-usb-on-linux)
