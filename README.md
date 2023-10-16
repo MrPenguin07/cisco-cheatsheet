@@ -14,6 +14,7 @@ Expanded upon by [@MrPenguin07](https://github.com/MrPenguin07)
 - [ ] ZBF
 - [X] BGP
 - [ ] RIPv2
+- [X] Spanning-tree
 - [ ] GRE/IPSEC
 - [ ] SPAN
 - [ ] HSRP/GLBP
