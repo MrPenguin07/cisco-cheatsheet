@@ -197,14 +197,11 @@ Expanded upon by [@MrPenguin07](https://github.com/MrPenguin07)
   * [How To's](#how-tos)
     + [FTP Server Usage](#ftp-server-usage)
     + [Sending Local Config over Serial](#sending-local-config-over-serial)
-    + [Install Packet Tracer on Fedora Workstation](#install-packet-tracer-on-fedora-workstation)
-    + [Console Access with `minicom` on Linux](#console-access-with-minicom-on-linux)
     + [Configure Serial Port with `stty` on Linux](#configure-serial-port-with-stty-on-linux)
       
   * [Tools](#tools)
     + [Subnetting/Calcuation](#subnettingcalcuation)
       - [ipcalc (*nix)](#ipcalc-nix)
-      - [sipcalc (*nix)](#sipcalc-nix)
       - [whatmask (*nix)](#whatmask-nix)
     
 ## Basic Networking
@@ -221,7 +218,6 @@ erase startup-config
 delete vlan.dat
 reload
 ```
-
 **Note:** Remember to say "no" to saving running config on reload. If you say yes, running config will be saved and you wont be working with fresh config on reload.
 
 #### Basic Switch Config
@@ -253,8 +249,6 @@ copy running-config startup-config
 ```
 
 #### Basic Config with Password Security
-
-_pastable_
 
 ```
 configure terminal
@@ -364,7 +358,12 @@ copy startup-config ftp://192.168.1.10/config.txt
 
 #### Backup config over console
 
-_coming soon_
+A simple yet effective method here is to;
+```
+set terminal length 0
+show run
+```
+Highlight and copy paste to local machine. Perhaps set terminal length back to ~25 so the less pager works again.
 
 #### Restore Config
 ```
@@ -405,7 +404,7 @@ copy ftp://192.168.1.10/config.txt running-config
 
 #### Interface Selection
 
-*Assign and IP address to a port*
+*Assign an IP address to a port*
 ```
 conf t
 int f0/1
@@ -462,9 +461,7 @@ end
 ```
 show ip interface brief
 ```
-
 *or*
-
 ```
 show ip int br
 ```
@@ -597,11 +594,11 @@ end
 
 *Configure SVI's and IP Address*
 
-| VLAN | IP Address | Gateway
+| VLAN | IP Address | Gateway |
 |------|------------|--------|
-| 10   | 192.168.10.254 | 192.168.10.1
-| 20 | 192.168.20.254 | 192.168.20.1|
-| 30 | 192.168.30.254 | 192.168.30.1|
+| 10   | 192.168.10.254 | 192.168.10.1 |
+| 20 | 192.168.20.254 | 192.168.20.1 |
+| 30 | 192.168.30.254 | 192.168.30.1 |
 
 ```
 conf t
@@ -851,7 +848,6 @@ show interface g0/1 switchport
 
 Etherchannel protocols LACP and PAgP configure multiple physical interfaces and links to act as one logical one. You can configure up to 8 ports to act as a single link. This increases bandwidth and improves redundancy.
 
-
 *Note: `mode active` sets the etherchannel group to use the LACP protocol*
 
 #### Configure EtherChannel
@@ -919,10 +915,9 @@ show dtp interface gi0/1
 
 ### Routing
 
-### OSPFv2
+#### OSPFv2
 
 #### OSPF Router IDs
-
 ##### All Commands
 
 ```
@@ -1393,61 +1388,6 @@ show logging
     
     *Replace 192.168.1.10 with the IP of the computer connected to the switch or router.*
 
-### Install Packet Tracer on Fedora Workstation
-
-(Credit for this howto goes to `philpinch` from the [Fedora Forums](https://ask.fedoraproject.org/t/how-to-install-new-cisco-packet-tracer-7-3-on-fedora-31-workstation/6047))
-
-**1. Log into the Fedora GNOME Desktop**
-
-Remove old version of PacketTracer (if necessary):
-```
-rm -rf /opt/pt
-rm -rf /usr/share/applications/cisco-pt7.desktop
-rm -rf /usr/share/applications/cisco-ptsa7.desktop
-rm -rf /usr/share/icons/hicolor/48x48/apps/pt7.png
-```
-
-**2. Download from the netacad web site the PacketTracer_730_amd64.deb package.**
-
-Open a terminal :
-
-```
-mkdir -p tmp/pt730
-```
-
-copy the PacketTracer_730_amd64.deb package to tmp/pt730
-
-
-**4. We’re going to extract the deb file in this folder:**
-```
-cd tmp/pt730
-ar -xv PacketTracer_730_amd64.deb
-mkdir control
-tar -C control -Jxf control.tar.xz
-mkdir data
-tar -C data -Jxf data.tar.xz
-```
-
-**5. Copy PacketTracer files to install it:**
-```
-cd data
-cp -r usr /
-cp -r opt /
-```
-
-**6. Configure Gnome Environment:**
-```
-sudo xdg-desktop-menu install /usr/share/applications/cisco-pt7.desktop
-sudo xdg-desktop-menu install /usr/share/applications/cisco-ptsa7.desktop
-sudo update-mime-database /usr/share/mime
-sudo gtk-update-icon-cache --force --ignore-theme-index /usr/share/icons/gnome
-sudo xdg-mime default cisco-ptsa7.desktop x-scheme-handler/pttp
-ln -sf /opt/pt/packettracer /usr/local/bin/packettracer
-```
-
-### Console Access with `minicom` on Linux
-
-_under construction_
 
 ### Configure Serial Port with `stty` on Linux
 
@@ -1471,9 +1411,6 @@ stty -F /dev/ttyUSB0 cs8 -parenb -cstopb -echo raw speed 9600
  #          port with a command like 'cat'. Some terminals will print codes
  #          like "^B" when receiving back a character like ASCII ETX (hex 03).
  ```
-
-
-
 
 ### Console Access with Screen on Linux
 
@@ -1520,7 +1457,6 @@ If you have trouble with the connection, e.g. it lags or is funky, cisco serial 
 - `no` flow control
 
 To do that exactly with screen:
-
 ```
 screen /dev/ttyS0 9600,cs8,-parenb,-cstopb,-hupcl
 screen /dev/ttyS0 19200,cs8,-parenb,-cstopb,-hupcl
@@ -1528,18 +1464,14 @@ screen /dev/ttyS0 115200,cs8,-parenb,-cstopb,-hupcl
 ```
 
 With `odd` parity:
-
 ```
 screen /dev/ttyS0 9600,cs8,parenb,parodd,-cstopb,-hupcl
 ```
 
 With `even` parity:
-
 ```
 screen /dev/ttyS0 9600,cs8,parenb,-parodd,-cstopb,-hupcl
 ```
-
-See more details at [http://www.noah.org/wiki/Screen_notes](http://www.noah.org/wiki/Screen_notes)
 
 ### Sending Local Config over Serial
 
@@ -1548,13 +1480,11 @@ See [@MrPenguin](https://github.com/MrPenguin07)'s cisco-send repository;
 
 ### Linux File Transfer Over Console (minicom / xmodem)
 
-_Howto comming soon!_
-
-
+_Howto coming soon!_
 
 ### Windows File Transfer Over Console ( HyperTerminal / xmodem)
 
-_Howto comming soon!_  
+_Howto coming soon!_  
 (actually it won't, not by me, accepting PR heh)
 
 ## Tools
@@ -1562,36 +1492,44 @@ _Howto comming soon!_
 ### Subnetting/Calcuation
 
 #### ipcalc (*nix)
-
-Debian/Ubuntu
-
+In most distro's package repositories; something resembling `<package manager> install ipcalc`
 ```
-apt install ipcalc
-```
+$ tldr ipcalc
 
-Fedora
+  Perform simple operations and calculations on IP addresses and networks.
+  More information: <https://manned.org/ipcalc>.
 
+  Show information about an address or network with a given subnet mask:
+     $ ipcalc 1.2.3.4 255.255.255.0
+  Show information about an address or network in CIDR notation:
+     $ ipcalc 1.2.3.4/24
+  Show the broadcast address of an address or network:
+     $ ipcalc -b 1.2.3.4/30
+  Show the network address of provided IP address and netmask:
+     $ ipcalc -n 1.2.3.4/24
+  Display geographic information about a given IP address:
+     $ ipcalc -g 1.2.3.4
 ```
-dnf install ipcalc
+**Example**
 ```
+$ ipcalc 1.2.3.4/24
 
+ipcalc 1.2.3.4/24
+Address:   1.2.3.4              00000001.00000010.00000011. 00000100
+Netmask:   255.255.255.0 = 24   11111111.11111111.11111111. 00000000
+Wildcard:  0.0.0.255            00000000.00000000.00000000. 11111111
+=>
+Network:   1.2.3.0/24           00000001.00000010.00000011. 00000000
+HostMin:   1.2.3.1              00000001.00000010.00000011. 00000001
+HostMax:   1.2.3.254            00000001.00000010.00000011. 11111110
+Broadcast: 1.2.3.255            00000001.00000010.00000011. 11111111
+Hosts/Net: 254                   Class A
 ```
-yum install ipcalc
-```
-
-#### sipcalc (*nix)
-
-Debian/Ubuntu
-
-```
-apt install sipcalc
-```
-
-_or replace `apt` with your package manager_
 
 #### whatmask (*nix)
+In most distro's package repositories; something resembling `<package manager> install whatmask`
 
-**Example Usage**
+**Example**
 
 ```
 $ whatmask 10.0.1.12/30
@@ -1611,13 +1549,3 @@ Usable IP Addresses = .........: 2
 First Usable IP Address = .....: 10.0.1.13
 Last Usable IP Address = ......: 10.0.1.14
 ```
-
-**Install**
-
-Debian/Ubuntu
-
-```
-apt install whatmask
-```
-
-_or replace `apt` with your package manager_
