@@ -10,13 +10,13 @@ Expanded upon by [@MrPenguin07](https://github.com/MrPenguin07)
 <sup>(script to set up stty, read local config & send to cisco device over serial, line by line with delay to avoid large config copy-paste failing)</sup>
 
 ***Add new sections***
-- [ ] Syslog
+- [X] Syslog
 - [ ] ZBF
 - [X] BGP
 - [ ] RIPv2
 - [X] Spanning-tree
 - [ ] GRE/IPSEC
-- [ ] SPAN
+- [X] SPAN
 - [ ] HSRP/GLBP
 - [ ] SNMP
 - [ ] Diagnosing issues w/ `show` | `cdp` etc 
@@ -102,6 +102,7 @@ Expanded upon by [@MrPenguin07](https://github.com/MrPenguin07)
       - [Create VLAN DHCP](#create-vlan-dhcp)
       - [Verify DHCP Pool](#verify-dhcp-pool)
       - [Delete DHCP Pool](#delete-dhcp-pool)
+        
   * [Intermediate Networking](#intermediate-networking)
     + [VLANs](#vlans)
       - [VLAN Creation](#vlan-creation)
@@ -123,6 +124,7 @@ Expanded upon by [@MrPenguin07](https://github.com/MrPenguin07)
       - [Configure DTP](#configure-dtp)
       - [Disable DTP](#disable-dtp)
       - [Verify DTP](#verify-dtp)
+        
   * [Advanced Networking](#advanced-networking)
     + [OSPFv2](#ospfv2)
       - [OSPF Router IDs](#ospf-router-ids)
@@ -156,35 +158,49 @@ Expanded upon by [@MrPenguin07](https://github.com/MrPenguin07)
         * [Verify OSPF Protocols](#verify-ospf-protocols)
         * [Verify OSPF Process Info](#verify-ospf-process-info)
         * [Verify OSPF Interface Setting](#verify-ospf-interface-setting)
-    + [BGP](#bgp)
-      - [Basic BGP Configuration](#basic-bgp-configuration)
-        * [Enable BGP Process](#enable-bgp-process)
-        * [Define BGP Neighbor](#define-bgp-neighbor)
-      - [Viewing BGP Information](#viewing-bgp-information)
-        * [Show BGP Summary](#show-bgp-summary)
-        * [Show BGP Routing Table](#show-bgp-routing-table)
-      - [Advertising Networks](#advertising-networks)
-        * [Advertise Network](#advertise-network)
-      - [Configuring Route Aggregation](#configuring-route-aggregation)
-        * [Aggregate Routes](#aggregate-routes)
-      - [Redistribute Routes](#redistributing-routes)
-        * [Redistribute Static Routes](#redistribute-static-routes)
-        * [Reditribute OSPF Routes](#redistribute-ospf-routes)
-    + [Spanning Tree Protocol (STP)](#spanning-tree-protocol)
-      - [Basic STP Configuration](basic-stp-configuration)
-        * [Enable STP](#enable-stp)
-        * [Set STP mode](#set-stp-mode)
-      - [STP Priority and Root Bridge Configuration](stp-priority-and-root-bridge-configuration)
-        * [Set Bridge priority](#set-bridge-priority)
-        * [Set Bridge priority for all VLANs](#set-bridge-priority-for-all-vlans)
-        * [Root Bridge Configuration](#root-bridge-configuration)
-      - [STP Verification and Troubleshooting](#stp-verification-and-troubleshooting)
+    * [BGP](#bgp)
+      + [Basic BGP Configuration](#basic-bgp-configuration)
+        - [Enable BGP Process](#enable-bgp-process)
+        - [Define BGP Neighbor](#define-bgp-neighbor)
+      + [Viewing BGP Information](#viewing-bgp-information)
+        - [Show BGP Summary](#show-bgp-summary)
+        - [Show BGP Routing Table](#show-bgp-routing-table)
+      + [Advertising Networks](#advertising-networks)
+        - [Advertise Network](#advertise-network)
+      + [Configuring Route Aggregation](#configuring-route-aggregation)
+        - [Aggregate Routes](#aggregate-routes)
+      + [Redistribute Routes](#redistributing-routes)
+        - [Redistribute Static Routes](#redistribute-static-routes)
+        - [Reditribute OSPF Routes](#redistribute-ospf-routes)
+    * [Spanning Tree Protocol (STP)](#spanning-tree-protocol)
+      + [Basic STP Configuration](basic-stp-configuration)
+        - [Enable STP](#enable-stp)
+        - [Set STP mode](#set-stp-mode)
+      + [STP Priority and Root Bridge Configuration](stp-priority-and-root-bridge-configuration)
+        - [Set Bridge priority](#set-bridge-priority)
+        - [Set Bridge priority for all VLANs](#set-bridge-priority-for-all-vlans)
+        - [Root Bridge Configuration](#root-bridge-configuration)
+      + [STP Verification and Troubleshooting](#stp-verification-and-troubleshooting)
+        
+  * [Monitoring/Logging/Diagnosis](#monitoring-logging-diagnosis)
+    + [SPAN - Switched Port Analyzer Configuration](#span-configuration)
+      - [Configure SPAN](#configure-span)
+        * [RSPAN Configuration](#rspan-configuration)
+        * [Configure RSPAN](#configure-rspan)
+        * [Verify SPAN/RSPAN](#verify-spanrspan)
+    + [Syslog](#syslog)
+      - [Syslog Configuration](#syslog-configuration)
+        * [Configure Syslog Server](#configure-syslog-server)
+        * [Set Syslog Level](#set-syslog-level)
+        * [Verify Syslog Configuration](#verify-syslog-configuration)
+        
   * [How To's](#how-tos)
     + [FTP Server Usage](#ftp-server-usage)
     + [Sending Local Config over Serial](#sending-local-config-over-serial)
     + [Install Packet Tracer on Fedora Workstation](#install-packet-tracer-on-fedora-workstation)
     + [Console Access with `minicom` on Linux](#console-access-with-minicom-on-linux)
     + [Configure Serial Port with `stty` on Linux](#configure-serial-port-with-stty-on-linux)
+      
   * [Tools](#tools)
     + [Subnetting/Calcuation](#subnettingcalcuation)
       - [ipcalc (*nix)](#ipcalc-nix)
@@ -1253,7 +1269,7 @@ show ip bgp
 ```
 
 ### Spanning Tree Protocol
-
+---
 #### Basic STP Configuration
 ##### Enable STP
 
@@ -1288,9 +1304,63 @@ spanning-tree vlan <vlan_id> root {primary|secondary}
 This command configures the current switch as the root bridge for the specified VLAN.
 
 #### STP Verification and Troubleshooting
-`show spanning-tree`
-`show spanning-tree vlan <vlan_id>`
+`show spanning-tree`  
+`show spanning-tree vlan <vlan_id>`  
 `show spanning-tree interface <interface_type> <interface_number> detail`
+
+## Monitoring Logging Diagnosis
+
+### SPAN Configuration
+#### Configure SPAN
+
+Create a SPAN session to monitor traffic:
+```
+conf t
+monitor session <session_number> source interface <interface_type> <interface_number>
+monitor session <session_number> destination interface <interface_type> <interface_number>
+```
+Can monitor a port/range, a VLAN or range of VLANs etc.
+
+### RSPAN Configuration
+#### Configure RSPAN
+Create an RSPAN VLAN, then configure the source and destination sessions:
+```
+conf t
+vlan <vlan_id>
+remote-span
+exit
+monitor session <session_number> source remote vlan <vlan_id>
+monitor session <session_number> destination interface <interface_type> <interface_number>
+```
+
+### Verify SPAN+RSPAN
+```
+show monitor session <session_number>
+```
+
+## Syslog
+### Syslog Configuration
+#### Configure Syslog Server
+
+Set the address of the Syslog server and enable logging:
+```
+conf t
+logging host <syslog_server_ip>
+logging on
+```
+Where <syslog_server_ip> is the IP address of your Syslog server.
+
+#### Set Syslog Level
+```
+conf t
+logging trap <level>
+```
+Where <level> can be one of the following: emergencies, alerts, critical, errors, warnings, notifications, informational, debugging.
+
+#### Verify Syslog Configuration
+```
+show logging
+```
 
 
 ## How To's
