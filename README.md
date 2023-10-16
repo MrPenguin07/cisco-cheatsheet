@@ -37,7 +37,7 @@ Expanded upon by [@MrPenguin07](https://github.com/MrPenguin07)
 ## Quick Navigtation
 
 ### Quick Snippets & Scripts
-  - [initialize](#initialize)
+  - [Initialize](#initialize)
   - [Basic Config](#setup)
   - [Assign Static IP to Interface](#assign-static-ip-to-interface)
   - [Snippet: Enable Router DHCP Server](#snippet-enable-router-dhcp-server)
@@ -72,7 +72,7 @@ Expanded upon by [@MrPenguin07](https://github.com/MrPenguin07)
 
   * [Basic Networking](#basic-networking)
     + [Setup](#setup)
-      - [initialize](#initialize)
+      - [Initialize](#initialize)
       - [Basic Switch Config](#basic-switch-config)
       - [Basic Router Config](#basic-router-config)
       - [Basic Config with Password Security](#basic-config-with-password-security)
@@ -196,7 +196,7 @@ Expanded upon by [@MrPenguin07](https://github.com/MrPenguin07)
 ### Setup
 ---
 
-#### initialize
+#### Initialize
 
 These commands wipe all config and reboot the device
 
