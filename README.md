@@ -36,18 +36,6 @@ Expanded upon by [@MrPenguin07](https://github.com/MrPenguin07)
 
 ## Quick Navigtation
 
-### Quick Snippets & Scripts
-  - [Initialize](#initialize)
-  - [Basic Config](#setup)
-  - [Assign Static IP to Interface](#assign-static-ip-to-interface)
-  - [Snippet: Enable Router DHCP Server](#snippet-enable-router-dhcp-server)
-  - [Snippet: Enable Switch DHCP Server](#snippet-enable-switch-dhcp-server)
-  - [Nuking (ROMMON, Password Recovery, etc)](#nuking-rommon-password-recovery-etc)
-  - [Howto: File Transfer Over Console (linux / xmodem)](#file-transfer-over-console-linux--xmodem)
-  - [Access Console over USB on Linux](#console-access-with-screen-on-linux)
-
-  
-
 ### General Sections
   * [Basic Networking](#basic-networking)
     + [Basic Setup](#setup)
