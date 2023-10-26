@@ -11,6 +11,7 @@ Expanded upon by [@MrPenguin07](https://github.com/MrPenguin07)
 
 ***Add new sections***
 - [X] Syslog
+- [ ] Restore firmware
 - [ ] ZBF
 - [X] BGP
 - [ ] RIPv2
