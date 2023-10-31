@@ -11,7 +11,7 @@ Expanded upon by [@MrPenguin07](https://github.com/MrPenguin07)
 
 ***Add new sections***
 - [X] Syslog
-- [ ] Restore firmware
+- [X] Restore firmware
 - [ ] ZBF
 - [X] BGP
 - [ ] RIPv2
@@ -22,7 +22,7 @@ Expanded upon by [@MrPenguin07](https://github.com/MrPenguin07)
 - [ ] SNMP
 - [ ] Diagnosing issues w/ `show` | `cdp` etc 
 - [ ] VOIP
-- [ ] tFTP
+- [X] TFTP
 
 - [ ] Backup/Restore configs & firmware
 - [ ] Useful commands;
@@ -72,7 +72,6 @@ Expanded upon by [@MrPenguin07](https://github.com/MrPenguin07)
       - [Backup config over FTP](#backup-config-over-ftp)
       - [Backup config over console](#backup-config-over-console)
       - [Restore Config](#restore-config)
-      - [Nuking (ROMMON, Password Recovery, etc)](#nuking-rommon-password-recovery-etc)
     + [Interfaces](#interfaces)
       - [Interface Selection](#interface-selection)
       - [Assign Static IP to Interface](#assign-static-ip-to-interface)
@@ -187,6 +186,15 @@ Expanded upon by [@MrPenguin07](https://github.com/MrPenguin07)
     + [FTP Server Usage](#ftp-server-usage)
     + [Sending Local Config over Serial](#sending-local-config-over-serial)
     + [Configure Serial Port with `stty` on Linux](#configure-serial-port-with-stty-on-linux)
+    + [Firmware & Recovery](#firmware-and-recovery)
+      - [Nuking (ROMMON, Password Recovery, etc)](#nuking-rommon-password-recovery-etc)
+      - [Restoring Firmware](#restoring-firmware)
+        * [Copying Firmware to Device](#copying-firmware-to-device)
+        * [Via TFTP](#via-tftp)
+        * [Via FTP](#via-ftp)
+      - [Copying Firmware from Device](#copying-firmware-from-device)
+        * [To TFTP Server](#to-tftp-server)
+        * [To FTP Server](#to-ftp-server)
       
   * [Tools](#tools)
     + [Subnetting/Calcuation](#subnettingcalcuation)
@@ -358,34 +366,6 @@ Highlight and copy paste to local machine. Perhaps set terminal length back to ~
 ```
 copy ftp://192.168.1.10/config.txt running-config
 ```
-
-#### Nuking (ROMMON, Password Recovery, etc)
-
-*Perform a Boot Interupt to Recover a lost or unknown password*
-
-**WARNING**: This operation will delete all current config on the device
-
-1. Ensure Console Cable is connected at 9600 Baudrate
-2. Backup config if you need
-3. Unplug Power
-4. Wait for a few seconds
-5. Re-insert the power cord to the switch
-6. Within 15 seconds, hold the `Mode` button until the green flashing light flashes amber and then returns to flashing green. Release the `Mode` button.
-7. Something like the following should display:
-
-    ```
-    initialize the flash file system, and finish loading the operating system software#
-    
-    flash_init
-    load_helper
-    boot
-    ```
-8. Run `flash_init`
-9. Run `copy flash:config.text flash:config.text.old`
-10. Run `boot`
-
-    The device should now boot with no config and grant you access to it.
-
 
 ### Interfaces
 ---
@@ -1354,7 +1334,8 @@ show logging
 1. Clone the repo: 
 
     ```
-    git clone https://github.com/grplyler/cisco-utils
+    git clone https://github.com/MrPenguin07/cisco-cheatsheet
+    cd !$
     ```
     
 2. Install python requirements (for ftp server):
@@ -1400,6 +1381,96 @@ stty -F /dev/ttyUSB0 cs8 -parenb -cstopb -echo raw speed 9600
  #          port with a command like 'cat'. Some terminals will print codes
  #          like "^B" when receiving back a character like ASCII ETX (hex 03).
  ```
+
+
+## Firmware and Recovery
+
+### Nuking (ROMMON, Password Recovery, etc)
+
+*Perform a Boot Interupt to Recover a lost or unknown password*
+
+**WARNING**: This operation will delete all current config on the device
+
+1. Ensure Console Cable is connected at 9600 Baudrate
+2. Backup config if you need
+3. Unplug Power
+4. Wait for a few seconds
+5. Re-insert the power cord to the switch
+6. Within 15 seconds, hold the `Mode` button until the green flashing light flashes amber and then returns to flashing green. Release the `Mode` button.
+7. Something like the following should display:
+
+    ```
+    initialize the flash file system, and finish loading the operating system software#
+    
+    flash_init
+    load_helper
+    boot
+    ```
+8. Run `flash_init`
+9. Run `copy flash:config.text flash:config.text.old`
+10. Run `boot`
+
+    The device should now boot with no config and grant you access to it.
+
+### Restoring Firmware
+
+Set up a local FTP/TFTP server, there's a simple python script included [here](#ftp-server-usage)
+
+#### Copying Firmware to Device
+
+#### Via TFTP
+Transfer firmware to the device using a TFTP server:
+
+```
+conf t
+copy tftp: flash:
+address or name of remote host []? <tftp_server_ip>
+source filename []? <firmware_filename>
+destination filename []? <firmware_filename>
+```
+Replace <tftp_server_ip> with the IP address of your TFTP server, and <firmware_filename> with the name of the firmware file.
+
+#### Via FTP
+
+Transfer firmware to the device using an FTP server:
+```
+conf t
+copy ftp: flash:
+address or name of remote host []? <ftp_server_ip>
+username []? <username>
+password []? <password>
+source filename []? <firmware_filename>
+destination filename []? <firmware_filename>
+```
+Replace <ftp_server_ip> with the IP address of your FTP server, <username> and <password> with your FTP credentials, and <firmware_filename> with the name of the firmware file.
+
+### Copying Firmware from Device
+
+#### To TFTP Server
+
+Transfer firmware from the device to a TFTP server:
+```
+conf t
+copy flash: tftp:
+source filename []? <firmware_filename>
+address or name of remote host []? <tftp_server_ip>
+```
+Replace <firmware_filename> with the name of the firmware file, and <tftp_server_ip> with the IP address of your TFTP server.
+
+#### To FTP Server
+
+Transfer firmware from the device to an FTP server:
+```
+conf t
+copy flash: ftp:
+source filename []? <firmware_filename>
+address or name of remote host []? <ftp_server_ip>
+username []? <username>
+password []? <password>
+```
+Replace <firmware_filename> with the name of the firmware file, <ftp_server_ip> with the IP address of your FTP server, and <username> and <password> with your FTP credentials.
+
+
 
 ### Console Access with Screen on Linux
 
