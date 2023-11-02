@@ -5,14 +5,13 @@ Credit to the original author [@grplyler](https://github.com/grplyler)
 Expanded upon by [@MrPenguin07](https://github.com/MrPenguin07)
 
 ## To-do
-- [X] Finalize & add cisco-send.py
-
+- [X] Finalize & add cisco-send.py  
 <sup>(script to set up stty, read local config & send to cisco device over serial, line by line with delay to avoid large config copy-paste failing)</sup>
 
 ***Add new sections***
 - [X] Syslog
 - [X] Restore firmware
-- [ ] ZBF
+- [ ] ZBF & ACLs
 - [X] BGP
 - [ ] RIPv2
 - [X] Spanning-tree
@@ -23,8 +22,6 @@ Expanded upon by [@MrPenguin07](https://github.com/MrPenguin07)
 - [ ] Diagnosing issues w/ `show` | `cdp` etc 
 - [ ] VOIP
 - [X] TFTP
-
-- [ ] Backup/Restore configs & firmware
 - [ ] Useful commands;
 - `# line con 0` && `# logging synchronous`
 - `# no ip domain-lookup`
