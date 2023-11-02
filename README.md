@@ -1493,7 +1493,7 @@ You can verify with with `ls /dev | grep USB`
 
 4. Run `screen`
 
-You will need root access.
+You will need root access or preferably to add your user into the `dialout` group (true for most linux distros I believe).
 
 ```
 screen /dev/ttyUSB0
