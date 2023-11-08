@@ -11,6 +11,7 @@ Expanded upon by [@MrPenguin07](https://github.com/MrPenguin07)
 ***Add new sections***
 - [X] Syslog
 - [X] Restore firmware
+- [X] Rollback with `revert`
 - [ ] ZBF & ACLs
 - [X] BGP
 - [ ] RIPv2
@@ -32,26 +33,14 @@ Expanded upon by [@MrPenguin07](https://github.com/MrPenguin07)
 - [ ] DHCP - `ip helper-address`
 - etc
 
-## Quick Navigtation
+## Quick Navigation
 
 ### General Sections
   * [Basic Networking](#basic-networking)
-    + [Basic Setup](#setup)
-    + [Interfaces](#interfaces)
-    + [DHCP](#dhcp)
   * [Intermediate Networking](#intermediate-networking)
-    + [VLANs](#vlans)
-    + [Trunks](#trunks)
-    + [Etherchannel](#etherchannel)
-    + [Dynamic Trunking Protocol (DTP)](#dtp-dynamic-trunking-protocol)
-    + [Routing](#routing)
-    + [Spanning Tree Protocol](#spanning-tree-protocol)
   * [Advanced Networking](#advanced-networking)
-    + [OSPFv2](#ospfv2)
-    + [BGP](#bgp)
+  * [Monitoring/Logging/Diagnosis](#monitoring-logging-diagnosis)
   * [How To's](#how-tos)
-    + [FTP Server Usage](#ftp-server-usage)
-    + [Access Console over USB on Linux](#console-access-with-screen-on-linux)
   * [Tools](#tools)
 
 ## Full Navigation
@@ -192,6 +181,12 @@ Expanded upon by [@MrPenguin07](https://github.com/MrPenguin07)
       - [Copying Firmware from Device](#copying-firmware-from-device)
         * [To TFTP Server](#to-tftp-server)
         * [To FTP Server](#to-ftp-server)
+    + [Configuration Rollback Using Revert](#configuration-rollback-using-revert)
+      - [Setup Archive Feature](#setup-archive-feature)
+      - [Initiate Rollback Timer](#initiate-rollback-timer)
+      - [Reset Rollback Timer](#reset-rollback-timer)
+      - [Manual Rollback](#manual-rollback)
+      - [Cancel Rollback](#cancel-rollback)
       
   * [Tools](#tools)
     + [Subnetting/Calcuation](#subnettingcalcuation)
@@ -1543,6 +1538,68 @@ _Howto coming soon!_
 
 _Howto coming soon!_  
 (actually it won't, not by me, accepting PR heh)
+
+## Configuration Rollback Using Revert
+
+### Setup Archive Feature
+
+To enable configuration archiving and set the storage path.  
+Set the archive path where config files will be saved.
+```
+Router# conf t
+Router(config)# archive
+Router(config-archive)#path ?
+flash: Write archive on flash: file system
+ftp: Write archive on ftp: file system
+http: Write archive on http: file system
+https: Write archive on https: file system
+pram: Write archive on pram: file system
+rcp: Write archive on rcp: file system
+scp: Write archive on scp: file system
+tftp: Write archive on tftp: file system
+Router(config-archive)# path flash:
+Router(config-archive)# end
+```
+
+### Initiate Rollback Timer  
+
+Example how to start a rollback timer (e.g., 1 minute),  
+make changes then revert.
+```
+Router# configure terminal revert timer 1
+Router(config)# hostname I-Changed-This
+I-Changed-This(config)# end
+```
+
+### Reset Rollback Timer
+
+To reset or extend the rollback timer (e.g., add 20 minutes):
+
+```
+Router# configure revert timer 20
+```
+
+### Manual Rollback
+
+To force a manual rollback to the archived configuration:
+
+```
+Router# conf t
+Router(config)# hostname I-Changed-This
+I-Changed-This(config)# end
+I-Changed-This# configure revert now
+Router#
+````
+
+### Cancel Rollback
+
+After thoroughly testing changes,  
+you may cancel the rollback process:
+
+```
+Router# configure confirm
+```
+Remember, these commands should be used with caution and tested during maintenance windows to prevent unexpected behaviour.
 
 ## Tools
 
