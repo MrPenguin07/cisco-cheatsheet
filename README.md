@@ -4,34 +4,20 @@
 Credit to the original author [@grplyler](https://github.com/grplyler)  
 Expanded upon by [@MrPenguin07](https://github.com/MrPenguin07)
 
-## To-do
-- [X] Finalize & add cisco-send.py  
-<sup>(script to set up stty, read local config & send to cisco device over serial, line by line with delay to avoid large config copy-paste failing)</sup>
+***Added new sections***
+- [X] Syslog, Restore firmware, Rollback with `revert`
+- [X] BGP, OSPF, Finalized & added cisco-send.py
+- [X] Spanning-tree, SPAN, TFTP, DHCP `ip helper-address`
+- [X] Diagnosing issues w/ `show` | `cdp` etc 
 
-***Add new sections***
-- [X] Syslog
-- [X] Restore firmware
-- [X] Rollback with `revert`
+***To-Do***
 - [ ] ZBF & ACLs
-- [X] BGP
 - [ ] RIPv2
-- [X] Spanning-tree
 - [ ] GRE/IPSEC
-- [X] SPAN
 - [ ] HSRP/GLBP
 - [ ] SNMP
-- [X] Diagnosing issues w/ `show` | `cdp` etc 
 - [ ] VOIP
-- [X] TFTP
-- [ ] Useful commands;
-- `# line con 0` && `# logging synchronous`
-- `# no ip domain-lookup`
-- etc
-  
-***Expand on existing sections***
-- [ ] Routing
-- [ ] DHCP - `ip helper-address`
-- etc
+- [ ] Useful commands eg;`# line con 0` && `# logging synchronous` `# no ip domain-lookup`
 
 ## Quick Navigation
 
@@ -72,6 +58,7 @@ Expanded upon by [@MrPenguin07](https://github.com/MrPenguin07)
       - [Snippet: Enable Switch DHCP Server](#snippet-enable-switch-dhcp-server)
       - [Create DHCP Pool](#create-dhcp-pool)
       - [DHCP Verification](#dhcp-verification)
+      - [Configuring IP Helper-Address](#configuring-ip-helper-address)
       - [Disable DHCP](#disable-dhcp)
       - [Re-enabled DHCP](#re-enabled-dhcp)
       - [Create VLAN DHCP](#create-vlan-dhcp)
@@ -546,10 +533,29 @@ end
 #### DHCP Verification
 
 ```
-show running-config | section dhcp
-show ip dhcp binding
-show ip dhcp server statistics
+# show running-config | section dhcp
+# show ip dhcp binding
+# show ip dhcp server statistics
 ```
+
+#### Configuring IP Helper-Address
+
+The `ip helper-address` command is used on a router's interface to enable forwarding of DHCP broadcasts onto other networks.   
+It allows clients on a subnet without a DHCP server to reach the DHCP server on another subnet.
+
+```
+conf t
+# interface <interface_type> <interface_number>
+# ip helper-address <dhcp_server_ip>
+```
+Configure the IP helper-address on the interface that receives the DHCP requests, specifying the IP address of the DHCP server.
+
+##### Verifying IP Helper-Address
+```
+# show ip interface <interface_type> <interface_number>
+```
+This command checks the configuration of the ip helper-address on a specific interface to ensure it's correctly set to the DHCP server's IP address.  
+
 
 #### Disable DHCP
 
