@@ -98,6 +98,15 @@ Expanded upon by [@MrPenguin07](https://github.com/MrPenguin07)
       - [Configure DTP](#configure-dtp)
       - [Disable DTP](#disable-dtp)
       - [Verify DTP](#verify-dtp)
+    + [Spanning Tree Protocol (STP)](#spanning-tree-protocol)
+      - [Basic STP Configuration](basic-stp-configuration)
+        * [Enable STP](#enable-stp)
+        * [Set STP mode](#set-stp-mode)
+      - [STP Priority and Root Bridge Configuration](stp-priority-and-root-bridge-configuration)
+        * [Set Bridge priority](#set-bridge-priority)
+        * [Set Bridge priority for all VLANs](#set-bridge-priority-for-all-vlans)
+        * [Root Bridge Configuration](#root-bridge-configuration)
+      - [STP Verification and Troubleshooting](#stp-verification-and-troubleshooting)
         
   * [Advanced Networking](#advanced-networking)
     + [OSPFv2](#ospfv2)
@@ -146,15 +155,6 @@ Expanded upon by [@MrPenguin07](https://github.com/MrPenguin07)
       + [Redistribute Routes](#redistributing-routes)
         - [Redistribute Static Routes](#redistribute-static-routes)
         - [Reditribute OSPF Routes](#redistribute-ospf-routes)
-    * [Spanning Tree Protocol (STP)](#spanning-tree-protocol)
-      + [Basic STP Configuration](basic-stp-configuration)
-        - [Enable STP](#enable-stp)
-        - [Set STP mode](#set-stp-mode)
-      + [STP Priority and Root Bridge Configuration](stp-priority-and-root-bridge-configuration)
-        - [Set Bridge priority](#set-bridge-priority)
-        - [Set Bridge priority for all VLANs](#set-bridge-priority-for-all-vlans)
-        - [Root Bridge Configuration](#root-bridge-configuration)
-      + [STP Verification and Troubleshooting](#stp-verification-and-troubleshooting)
         
   * [Monitoring/Logging/Diagnosis](#monitoring-logging-diagnosis)
     + [SPAN - Switched Port Analyzer Configuration](#span-configuration)
@@ -872,6 +872,47 @@ end
 show dtp interface gi0/1
 ```
 
+### Spanning Tree Protocol
+---
+#### Basic STP Configuration
+##### Enable STP
+
+```
+conf t
+spanning-tree vlan <vlan_id>
+```
+Where <vlan_id> is the VLAN ID for which STP is being configured.
+
+##### Set STP Mode
+```
+spanning-tree mode { pvst | rapid-pvst | mst }
+```
+Choose pvst for Per-VLAN Spanning Tree, rapid-pvst for Rapid Per-VLAN Spanning Tree, or mst for Multiple Spanning Tree.
+
+#### STP Priority and Root Bridge Configuration
+##### Set Bridge Priority
+```
+spanning-tree vlan <vlan_id> priority <priority_value>
+```
+Where <vlan_id> is the VLAN ID, and <priority_value> is the priority value (0, 4096, 8192, 12288, ..., 61440).
+
+##### Set Bridge Priority for All VLANs
+```
+spanning-tree vlan 1-4094 priority <priority_value>
+```
+
+##### Root Bridge Configuration
+```
+spanning-tree vlan <vlan_id> root {primary|secondary}
+```
+This command configures the current switch as the root bridge for the specified VLAN.
+
+#### STP Verification and Troubleshooting
+`show spanning-tree`  
+`show spanning-tree vlan <vlan_id>`  
+`show spanning-tree interface <interface_type> <interface_number> detail`  
+
+
 ## Advanced Networking
 
 ### Routing
@@ -1223,46 +1264,6 @@ Where <AS_number> is the Autonomous System number for the router.
 ```
 show ip bgp
 ```
-
-### Spanning Tree Protocol
----
-#### Basic STP Configuration
-##### Enable STP
-
-```
-conf t
-spanning-tree vlan <vlan_id>
-```
-Where <vlan_id> is the VLAN ID for which STP is being configured.
-
-##### Set STP Mode
-```
-spanning-tree mode { pvst | rapid-pvst | mst }
-```
-Choose pvst for Per-VLAN Spanning Tree, rapid-pvst for Rapid Per-VLAN Spanning Tree, or mst for Multiple Spanning Tree.
-
-#### STP Priority and Root Bridge Configuration
-##### Set Bridge Priority
-```
-spanning-tree vlan <vlan_id> priority <priority_value>
-```
-Where <vlan_id> is the VLAN ID, and <priority_value> is the priority value (0, 4096, 8192, 12288, ..., 61440).
-
-##### Set Bridge Priority for All VLANs
-```
-spanning-tree vlan 1-4094 priority <priority_value>
-```
-
-##### Root Bridge Configuration
-```
-spanning-tree vlan <vlan_id> root {primary|secondary}
-```
-This command configures the current switch as the root bridge for the specified VLAN.
-
-#### STP Verification and Troubleshooting
-`show spanning-tree`  
-`show spanning-tree vlan <vlan_id>`  
-`show spanning-tree interface <interface_type> <interface_number> detail`
 
 ## Monitoring Logging Diagnosis
 
