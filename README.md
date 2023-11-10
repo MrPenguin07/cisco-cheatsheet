@@ -140,9 +140,9 @@ Expanded upon by [@MrPenguin07](https://github.com/MrPenguin07)
         - [Advertise Network](#advertise-network)
       + [Configuring Route Aggregation](#configuring-route-aggregation)
         - [Aggregate Routes](#aggregate-routes)
-      + [Redistribute Routes](#redistributing-routes)
-        - [Redistribute Static Routes](#redistribute-static-routes)
-        - [Reditribute OSPF Routes](#redistribute-ospf-routes)
+    * [Redistribute Routes](#redistributing-routes)
+      - [Redistribute Static/BGP Routes](#redistribute-static-routes)
+      - [Redistribute OSPF Routes](#redistribute-ospf-routes)
         
   * [Monitoring/Logging](#monitoring-logging)
     + [SPAN - Switched Port Analyzer Configuration](#span-configuration)
@@ -1270,9 +1270,9 @@ aggregate-address <aggregate_address> <aggregate_mask>
 ```
 Where `<aggregate_address>` is the summarized network address and `<aggregate_mask>` is the subnet mask for the summarized network.
 
-#### Redistributing Routes
+### Redistributing Routes
 
-##### Redistribute Static Routes
+#### Redistribute Static Routes
 ```
 conf t
 router bgp <AS_number>
@@ -1280,7 +1280,7 @@ redistribute static
 ```
 Where <AS_number> is the Autonomous System number for the router.
 
-##### Redistribute OSPF Routes
+#### Redistribute OSPF Routes
 ```
 conf t
 router bgp <AS_number>
@@ -1288,7 +1288,7 @@ redistribute ospf <process_id>
 ```
 Where <AS_number> is the Autonomous System number for the router, and <process_id> is the OSPF process ID.
 
-##### Redistribute Connected Routes
+#### Redistribute Connected Routes
 ```
 conf t
 router bgp <AS_number>
@@ -1296,7 +1296,7 @@ redistribute connected
 ```
 Where <AS_number> is the Autonomous System number for the router.
 
-##### Verify Redistribution
+#### Verify Redistribution
 ```
 show ip bgp
 ```
