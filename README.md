@@ -6,7 +6,7 @@ Expanded upon by [@MrPenguin07](https://github.com/MrPenguin07)
 
 ***Added new sections***
 - [X] Syslog, Restore firmware, Rollback with `revert`
-- [X] BGP, OSPF, Finalized & added cisco-send.py
+- [X] BGP, OSPF, Added [Cisco-send](https://github.com/MrPenguin07/cisco-send)
 - [X] Spanning-tree, SPAN, TFTP, DHCP `ip helper-address`
 - [X] Diagnosing issues w/ `show` | `cdp` etc 
 
