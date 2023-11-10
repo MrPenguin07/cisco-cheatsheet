@@ -39,7 +39,7 @@ Expanded upon by [@MrPenguin07](https://github.com/MrPenguin07)
   * [Basic Networking](#basic-networking)
   * [Intermediate Networking](#intermediate-networking)
   * [Advanced Networking](#advanced-networking)
-  * [Monitoring/Logging/Diagnosis](#monitoring-logging-diagnosis)
+  * [Monitoring/Logging](#monitoring-logging)
   * [How To's](#how-tos)
   * [Tools](#tools)
 
@@ -156,7 +156,7 @@ Expanded upon by [@MrPenguin07](https://github.com/MrPenguin07)
         - [Redistribute Static Routes](#redistribute-static-routes)
         - [Reditribute OSPF Routes](#redistribute-ospf-routes)
         
-  * [Monitoring/Logging/Diagnosis](#monitoring-logging-diagnosis)
+  * [Monitoring/Logging](#monitoring-logging)
     + [SPAN - Switched Port Analyzer Configuration](#span-configuration)
       - [Configure SPAN](#configure-span)
         * [RSPAN Configuration](#rspan-configuration)
@@ -167,6 +167,35 @@ Expanded upon by [@MrPenguin07](https://github.com/MrPenguin07)
         * [Configure Syslog Server](#configure-syslog-server)
         * [Set Syslog Level](#set-syslog-level)
         * [Verify Syslog Configuration](#verify-syslog-configuration)
+
+  * [Diagnostics](#diagnostics)
+    + [BGP Troubleshooting](#bgp-troubleshooting)
+      - [Show BGP Summary](#show-bgp-summary)
+      - [Show BGP Neighbors](#show-bgp-neighbors)
+    + [OSPF Troubleshooting](#ospf-troubleshooting)
+      - [Show OSPF Neighbors](#show-ospf-neighbors)
+      - [Show OSPF Interface](#show-ospf-interface)
+    + [Common Diagnostics](#common-diagnostics)
+      - [Show Running Configuration](#show-running-configuration)
+      - [Show Interface Brief](#show-interface-brief)
+      - [Show IP DHCP Binding](#show-ip-dhcp-binding)
+      - [Show Access-Lists](#show-access-lists)
+      - [Show EIGRP Neighbors](#show-eigrp-neighbors)
+    + [Device Information](#device-information)
+      - [Show Version](#show-version)
+      - [Show NTP Status](#show-ntp-status)
+    + [Network Utilities](#network-utilities)
+      - [Show ARP](#show-arp)
+      - [Show MAC Address-Table](#show-mac-address-table)
+    + [Port and VLAN Information](#port-and-vlan-information)
+      - [Show VLAN](#show-vlan)
+      - [Show Interfaces Trunk](#show-interfaces-trunk)
+    + [Protocol Specific](#protocol-specific)
+      - [Show IP NAT Translations](#show-ip-nat-translations)
+      - [Show Standby](#show-standby)
+    + [EtherChannel and Port Security](#etherchannel-and-port-security)
+      - [Show EtherChannel](#show-etherchannel)
+      - [Show Port-Security](#show-port-security)
         
   * [How To's](#how-tos)
     + [FTP Server Usage](#ftp-server-usage)
@@ -1265,7 +1294,7 @@ Where <AS_number> is the Autonomous System number for the router.
 show ip bgp
 ```
 
-## Monitoring Logging Diagnosis
+## Monitoring Logging
 
 ### SPAN Configuration
 #### Configure SPAN
@@ -1297,6 +1326,7 @@ show monitor session <session_number>
 
 ## Syslog
 ### Syslog Configuration
+
 #### Configure Syslog Server
 
 Set the address of the Syslog server and enable logging:
@@ -1318,6 +1348,166 @@ Where <level> can be one of the following: emergencies, alerts, critical, errors
 ```
 show logging
 ```
+
+## Diagnostics
+
+### BGP Troubleshooting
+
+#### Show BGP Summary
+
+```
+# show ip bgp summary
+```
+This command provides a snapshot of the BGP routing process, displaying the number of BGP routes and the status of BGP peers.  
+Example output includes a list of BGP neighbors, the AS number, the last time the BGP peer was up, and the state of the BGP session (e.g., Established).
+
+#### Show BGP Neighbors
+
+```
+# show ip bgp neighbors
+```
+Use this command to get detailed information about each BGP neighbor, such as BGP state, configured timers, and counters for messages sent and received.  
+The output will give you insights into the BGP session's performance and help identify any configuration mismatches between neighbors.
+
+### OSPF Troubleshooting
+
+#### Show OSPF Neighbors
+
+```
+# show ip ospf neighbor
+```
+This command confirms if OSPF has formed adjacency with neighbors and shows the current state of each neighbor relationship.  
+The output details each OSPF neighbor's router ID, state (e.g., Full for a complete adjacency), and the interface it's connected on.
+
+#### Show OSPF Interface
+
+```
+# show ip ospf interface
+```
+To diagnose OSPF interface-specific issues, such as problems with timers or MTU mismatches, use this command.  
+The output includes the cost, state, and neighbors connected to each OSPF-enabled interface, providing a comprehensive look at how OSPF is operating on the router.
+
+### Common Diagnostics
+
+#### Show Running Configuration
+
+```
+# show running-config
+```
+This command displays the current active configuration in the device's memory. It's useful for verifying changes that have not yet been saved to the startup configuration.  
+
+#### Show Interface Brief
+
+```
+# show ip interface brief
+```
+The output from this command provides a concise table of interfaces, showing their IP addresses, statuses, and protocol states, which is helpful for a quick check of interface operations.  
+
+#### Show IP DHCP Binding
+
+```
+# show ip dhcp binding
+```
+This displays the list of all IP addresses assigned by the DHCP server to clients, along with their MAC addresses, lease time, and type of binding.
+
+#### Show Access-Lists
+
+```
+# show access-lists
+```
+Shows all configured access lists and their conditions. It's a quick way to review which access control entries are configured and how many packets matched each entry.
+
+#### Show EIGRP Neighbors
+
+```
+# show ip eigrp neighbors
+```
+Useful for verifying EIGRP-established adjacencies, this command shows neighboring routers connected via EIGRP and includes details such as the hold time and last heard timer.  
+
+
+### Device Information
+
+#### Show Version
+
+```
+# show version
+```
+Displays the router or switch's hardware model, software version, names and sources of configuration files, the last reboot reason, and additional information about the hardware platform.
+
+#### Show NTP Status
+
+```
+# show ntp status
+```
+This command is used to verify the status of NTP synchronization on the device.   
+It tells you if the device is synchronized with an NTP server, the stratum level, and the reference IP address of the NTP source.
+Network Utilities
+
+
+#### Show ARP
+
+```
+# show arp
+```
+Show arp provides the Address Resolution Protocol (ARP) table of the device.   
+It maps IP addresses to MAC addresses for all interfaces, which is crucial for troubleshooting network connectivity issues.
+
+#### Show MAC Address-Table
+
+```
+# show mac address-table
+```
+This command displays the MAC address table, which contains all learned MAC addresses and their associated VLAN and port information.  
+It's essential for diagnosing issues with MAC address learning and switch port mappings.
+
+
+### Port and VLAN Information
+
+#### Show VLAN
+```
+# show vlan
+# show vlan int br
+```
+This command displays information about the VLANs currently running in the switch, including VLAN ID, name, and the ports assigned to them.   
+Useful for verifying VLAN configurations.
+
+#### Show Interfaces Trunk
+
+```
+# show interfaces trunk
+```
+Lists the trunking status of interfaces, showing the native VLAN and the allowed VLANs on each trunk port.
+
+### Protocol Specific
+
+#### Show IP NAT Translations
+
+```
+# show ip nat translations
+```
+Displays the Network Address Translation (NAT) translations table, helpful for troubleshooting NAT configurations by showing active translation entries.
+
+#### Show Standby
+
+```
+# show standby
+```
+Used to display the status of Hot Standby Router Protocol (HSRP) configurations, showing the state, priority, and the IP address of the standby router.
+
+### EtherChannel and Port Security
+
+#### Show EtherChannel
+```
+# show etherchannel summary
+```
+Provides an overview of the EtherChannel status, including the group number, ports involved, and their status, which is key in verifying link aggregation setups.
+
+#### Show Port-Security
+
+```
+# show port-security
+```
+Displays the port security configuration on interfaces, including the maximum number of secure MAC addresses, current count of secure MAC addresses, and security violation counts.
 
 
 ## How To's
