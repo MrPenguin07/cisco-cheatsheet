@@ -20,7 +20,7 @@ Expanded upon by [@MrPenguin07](https://github.com/MrPenguin07)
 - [X] SPAN
 - [ ] HSRP/GLBP
 - [ ] SNMP
-- [ ] Diagnosing issues w/ `show` | `cdp` etc 
+- [X] Diagnosing issues w/ `show` | `cdp` etc 
 - [ ] VOIP
 - [X] TFTP
 - [ ] Useful commands;
@@ -40,6 +40,7 @@ Expanded upon by [@MrPenguin07](https://github.com/MrPenguin07)
   * [Intermediate Networking](#intermediate-networking)
   * [Advanced Networking](#advanced-networking)
   * [Monitoring/Logging](#monitoring-logging)
+  * [Diagnostics](#diagnostics)
   * [How To's](#how-tos)
   * [Tools](#tools)
 
