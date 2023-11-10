@@ -169,10 +169,8 @@ Expanded upon by [@MrPenguin07](https://github.com/MrPenguin07)
       - [Show IP DHCP Binding](#show-ip-dhcp-binding)
       - [Show Access-Lists](#show-access-lists)
       - [Show EIGRP Neighbors](#show-eigrp-neighbors)
-    + [Device Information](#device-information)
       - [Show Version](#show-version)
       - [Show NTP Status](#show-ntp-status)
-    + [Network Utilities](#network-utilities)
       - [Show ARP](#show-arp)
       - [Show MAC Address-Table](#show-mac-address-table)
     + [Port and VLAN Information](#port-and-vlan-information)
@@ -184,6 +182,7 @@ Expanded upon by [@MrPenguin07](https://github.com/MrPenguin07)
     + [EtherChannel and Port Security](#etherchannel-and-port-security)
       - [Show EtherChannel](#show-etherchannel)
       - [Show Port-Security](#show-port-security)
+    + [CDP Diagnostics](#cdp-diagnostics)
         
   * [How To's](#how-tos)
     + [FTP Server Usage](#ftp-server-usage)
@@ -1431,9 +1430,6 @@ Shows all configured access lists and their conditions. It's a quick way to revi
 ```
 Useful for verifying EIGRP-established adjacencies, this command shows neighboring routers connected via EIGRP and includes details such as the hold time and last heard timer.  
 
-
-### Device Information
-
 #### Show Version
 
 ```
@@ -1515,6 +1511,18 @@ Provides an overview of the EtherChannel status, including the group number, por
 # show port-security
 ```
 Displays the port security configuration on interfaces, including the maximum number of secure MAC addresses, current count of secure MAC addresses, and security violation counts.
+
+#### CDP Diagnostics
+
+Cisco Discovery Protocol (CDP) is a proprietary Layer 2 protocol used by Cisco devices to discover information about directly connected devices, such as model, port number, and IP address.
+```
+# show cdp neighbors
+```
+This command lists all directly connected Cisco devices. Useful for network topology mapping and troubleshooting connectivity issues.
+```
+# show cdp interface <interface_name>
+```
+Displays CDP information specific to a particular interface, including the frequency of CDP updates and the hold time for CDP packets.
 
 
 ## How To's
