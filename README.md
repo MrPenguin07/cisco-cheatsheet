@@ -8,7 +8,7 @@ Expanded upon by [@MrPenguin07](https://github.com/MrPenguin07)
 - [X] Syslog, Restore firmware, Rollback with `revert`
 - [X] BGP, OSPF, Added [Cisco-send](https://github.com/MrPenguin07/cisco-send)
 - [X] Spanning-tree, SPAN, TFTP, DHCP `ip helper-address`
-- [X] Diagnosing issues w/ `show` | `cdp` etc
+- [X] Diagnosing issues, Useful cmds
 
 ***To-Do***
 - [ ] ZBF & ACLs
@@ -18,7 +18,6 @@ Expanded upon by [@MrPenguin07](https://github.com/MrPenguin07)
 - [ ] HSRP/GLBP
 - [ ] SNMP
 - [ ] VOIP
-- [ ] Useful commands eg;`# line con 0` && `# logging synchronous` `# no ip domain-lookup`
 
 ## Quick Navigation
 
