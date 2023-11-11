@@ -8,10 +8,11 @@ Expanded upon by [@MrPenguin07](https://github.com/MrPenguin07)
 - [X] Syslog, Restore firmware, Rollback with `revert`
 - [X] BGP, OSPF, Added [Cisco-send](https://github.com/MrPenguin07/cisco-send)
 - [X] Spanning-tree, SPAN, TFTP, DHCP `ip helper-address`
-- [X] Diagnosing issues w/ `show` | `cdp` etc 
+- [X] Diagnosing issues w/ `show` | `cdp` etc
 
 ***To-Do***
 - [ ] ZBF & ACLs
+- [ ] Device auth.
 - [ ] RIPv2
 - [ ] GRE/IPSEC
 - [ ] HSRP/GLBP
@@ -26,6 +27,7 @@ Expanded upon by [@MrPenguin07](https://github.com/MrPenguin07)
   * [Intermediate Networking](#intermediate-networking)
   * [Advanced Networking](#advanced-networking)
   * [Monitoring/Logging](#monitoring-logging)
+  * [Useful Commands](#useful-commands)
   * [Diagnostics](#diagnostics)
   * [How To's](#how-tos)
   * [Tools](#tools)
@@ -64,7 +66,7 @@ Expanded upon by [@MrPenguin07](https://github.com/MrPenguin07)
       - [Create VLAN DHCP](#create-vlan-dhcp)
       - [Verify DHCP Pool](#verify-dhcp-pool)
       - [Delete DHCP Pool](#delete-dhcp-pool)
-        
+---
   * [Intermediate Networking](#intermediate-networking)
     + [VLANs](#vlans)
       - [VLAN Creation](#vlan-creation)
@@ -95,7 +97,7 @@ Expanded upon by [@MrPenguin07](https://github.com/MrPenguin07)
         * [Set Bridge priority for all VLANs](#set-bridge-priority-for-all-vlans)
         * [Root Bridge Configuration](#root-bridge-configuration)
       - [STP Verification and Troubleshooting](#stp-verification-and-troubleshooting)
-        
+---
   * [Advanced Networking](#advanced-networking)
     + [OSPFv2](#ospfv2)
       - [OSPF Router IDs](#ospf-router-ids)
@@ -143,7 +145,7 @@ Expanded upon by [@MrPenguin07](https://github.com/MrPenguin07)
     * [Redistribute Routes](#redistributing-routes)
       - [Redistribute Static/BGP Routes](#redistribute-static-routes)
       - [Redistribute OSPF Routes](#redistribute-ospf-routes)
-        
+---        
   * [Monitoring/Logging](#monitoring-logging)
     + [SPAN - Switched Port Analyzer Configuration](#span-configuration)
       - [Configure SPAN](#configure-span)
@@ -155,7 +157,23 @@ Expanded upon by [@MrPenguin07](https://github.com/MrPenguin07)
         * [Configure Syslog Server](#configure-syslog-server)
         * [Set Syslog Level](#set-syslog-level)
         * [Verify Syslog Configuration](#verify-syslog-configuration)
-
+---
+  * [Useful Commands](#useful-commands)
+    + [Using Pipes in IOS](#using-pipes-in-ios)
+      - [Understanding Pipe Usage](#understanding-pipe-usage)
+      - [Include Keyword](#include-keyword)
+      - [Exclude Keyword](#exclude-keyword)
+      - [Section Keyword](#section-keyword)
+      - [Begin Keyword](#begin-keyword)
+    + [Prevent Syslog Message Interruptions](#prevent-syslog-message-interruptions)
+    + [Prevent DNS Resolution for Typos](#prevent-dns-resolution-for-typos)
+    + [Set Message of the Day Banner](#set-message-of-the-day-banner)
+    + [Create Command Alias](#create-command-alias)
+    + [Disable TCP and UDP Small Servers](#disable-tcp-and-udp-small-servers)
+    + [Add Description to Interfaces](#add-description-to-interfaces)
+    + [Show CPU Processes](#show-cpu-processes)
+    + [Enable Terminal Monitoring](#enable-terminal-monitoring)
+---
   * [Diagnostics](#diagnostics)
     + [BGP Troubleshooting](#bgp-troubleshooting)
       - [Show BGP Summary](#show-bgp-summary)
@@ -183,7 +201,7 @@ Expanded upon by [@MrPenguin07](https://github.com/MrPenguin07)
       - [Show EtherChannel](#show-etherchannel)
       - [Show Port-Security](#show-port-security)
     + [CDP Diagnostics](#cdp-diagnostics)
-        
+---         
   * [How To's](#how-tos)
     + [FTP Server Usage](#ftp-server-usage)
     + [Sending Local Config over Serial](#sending-local-config-over-serial)
@@ -203,7 +221,7 @@ Expanded upon by [@MrPenguin07](https://github.com/MrPenguin07)
       - [Reset Rollback Timer](#reset-rollback-timer)
       - [Manual Rollback](#manual-rollback)
       - [Cancel Rollback](#cancel-rollback)
-      
+---      
   * [Tools](#tools)
     + [Subnetting/Calcuation](#subnettingcalcuation)
       - [ipcalc (*nix)](#ipcalc-nix)
@@ -1354,6 +1372,96 @@ Where <level> can be one of the following: emergencies, alerts, critical, errors
 ```
 show logging
 ```
+
+## Useful Commands
+
+### Using Pipes in IOS
+
+#### Understanding Pipe Usage
+Pipes ( | ) in Cisco IOS are used to filter the output of commands, making it easier to find specific information.
+
+#### Include Keyword
+```
+<command> | include <expression>
+```
+Filters the output to only show lines that include the specified expression.
+
+#### Exclude Keyword
+```
+<command> | exclude <expression>
+```
+Filters the output to remove lines that contain the specified expression.
+
+#### Section Keyword
+```
+<command> | section <expression>
+```
+Displays the output section that includes the specified expression. Particularly useful for commands that have a structured output like show running-config.
+
+#### Begin Keyword
+```
+<command> | begin <expression>
+```
+Displays the output starting from the line where the specified expression first appears, which is useful for quickly navigating to a specific part of the command output.
+
+### Prevent Syslog Message Interruptions
+```
+conf t
+# line con 0
+# logging synchronous
+```
+This command prevents console messages from interrupting command input by synchronizing log messages.
+
+### Prevent DNS Resolution for Typos
+```
+conf t
+no ip domain-lookup
+```
+Disables DNS lookup to prevent the router from attempting to translate incorrectly entered commands as domain names.
+
+### Set Message of the Day Banner
+```
+conf t
+banner motd # [Your Message Here] #
+```
+Sets a message-of-the-day banner that appears on all connected terminals. Replace [Your Message Here] with your desired text.
+
+### Create Command Alias
+```
+conf t
+alias exec [shortcut] [command]
+```
+Creates a shortcut (alias) for a longer command. Replace [shortcut] with your alias and [command] with the command it represents.
+
+### Disable TCP and UDP Small Servers
+```
+conf t
+no service tcp-small-servers
+no service udp-small-servers
+```
+Disables TCP and UDP small servers, which are often unnecessary and can be a security risk.
+
+### Add Description to Interfaces
+```
+conf t
+interface [interface_type] [interface_number]
+description [text]
+```
+Adds a description to an interface. Replace [interface_type] and [interface_number] with the specific interface details and [text] with the description.
+
+### Show CPU Processes
+```
+# show processes cpu
+# show processes memory
+```
+Displays information about the router's CPU/mem processes and their utilization.
+
+### Enable Terminal Monitoring
+```
+# terminal monitor
+```
+Enables the display of log and debug command output on your terminal. Useful in SSH or Telnet sessions.
+
 
 ## Diagnostics
 
