@@ -96,6 +96,14 @@ Expanded upon by [@MrPenguin07](https://github.com/MrPenguin07)
         * [Set Bridge priority for all VLANs](#set-bridge-priority-for-all-vlans)
         * [Root Bridge Configuration](#root-bridge-configuration)
       - [STP Verification and Troubleshooting](#stp-verification-and-troubleshooting)
+    + [Zone-Based Firewalls](#zone-based-firewalls)
+      - [Understanding Zone-Based Firewalls](#understanding-zone-based-firewalls)
+      - [Defining Zones](#defining-zones)
+      - [Creating Class Maps](#creating-class-maps)
+      - [Creating Policy Maps](#creating-policy-maps)
+      - [Applying Policy to Zone Pairs](#applying-policy-to-zone-pairs)
+      - [Assigning Interfaces to Zones](#assigning-interfaces-to-zones)
+      - [Verifying Zone-Based Firewall Configuration](#verifying-zone-based-firewall-configuration)
 ---
   * [Advanced Networking](#advanced-networking)
     + [OSPFv2](#ospfv2)
@@ -964,6 +972,59 @@ This command configures the current switch as the root bridge for the specified 
 `show spanning-tree vlan <vlan_id>`  
 `show spanning-tree interface <interface_type> <interface_number> detail`  
 
+### Zone-Based Firewalls
+---
+#### Understanding Zone-Based Firewalls
+
+Zone-Based Firewalls in Cisco IOS are advanced security features that allow you to create different security zones in your network and apply specific policies to control the traffic flow between these zones.
+
+#### Defining Zones
+```
+conf t
+# zone security <zone_name>
+```
+This command is used to define a security zone. Each zone represents a segment of your network. Replace <zone_name> with a descriptive name for the zone.
+
+#### Creating Class Maps
+```
+class-map type inspect match-any <class_map_name>
+match protocol <protocol>
+```
+Class maps are used to classify traffic based on specific criteria. The match protocol command allows you to specify which protocol you want to match, like HTTP, FTP, or others.   
+To view the list of protocols available for inspection, you can use the show policy-map type inspect protocol command. This command will list all protocols that the firewall can inspect.
+
+#### Creating Policy Maps
+```
+policy-map type inspect <policy_map_name>
+class type inspect <class_map_name>
+inspect
+```
+Policy maps are where you define the actions to be taken on the traffic classified by the class maps. The inspect action, for example, enables stateful inspection of the traffic.  
+This stateful inspection allows the firewall to keep track of active sessions and make decisions based on the state of these sessions.
+
+#### Applying Policy to Zone Pairs
+```
+zone-pair security <zone_pair_name> source <source_zone> destination <destination_zone>
+service-policy type inspect <policy_map_name>
+```
+After defining your class maps and policy maps, you need to apply them to a zone pair. This command specifies the source and destination zones and applies the policy map to control traffic between these zones.
+
+#### Assigning Interfaces to Zones
+```
+conf t
+# interface <interface_type> <interface_number>
+zone-member security <zone_name>
+```
+
+This command is used to assign an interface on your device to a specific security zone, effectively placing that interface within the defined security context.
+
+#### Verifying Zone-Based Firewall Configuration
+```
+# show zone security
+# show policy-map type inspect zone-pair sessions
+```
+Use these commands to verify your configuration. The first command shows the defined security zones, while the second displays active sessions based on your policy maps.
+
 
 ## Advanced Networking
 
@@ -1235,7 +1296,7 @@ ip ospf dead-interval 100
 end
 ```
 ### BGP
-
+---
 #### Basic BGP Configuration
 
 ##### Enable BGP Process
