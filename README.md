@@ -18,6 +18,7 @@ Expanded upon by [@MrPenguin07](https://github.com/MrPenguin07)
 - [ ] HSRP/GLBP
 - [ ] SNMP
 - [ ] VOIP
+- [ ] NAT
 
 ## Quick Navigation
 
