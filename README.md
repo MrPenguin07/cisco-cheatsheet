@@ -19,6 +19,7 @@ Expanded upon by [@MrPenguin07](https://github.com/MrPenguin07)
 - [ ] SNMP
 - [ ] VOIP
 - [ ] NAT
+- [ ] Static routing
 
 ## Quick Navigation
 
