@@ -8,10 +8,10 @@ Expanded upon by [@MrPenguin07](https://github.com/MrPenguin07)
 - [X] Syslog, Restore firmware, Rollback with `revert`
 - [X] BGP, OSPF, Added [Cisco-send](https://github.com/MrPenguin07/cisco-send)
 - [X] Spanning-tree, SPAN, TFTP, DHCP `ip helper-address`
-- [X] Diagnosing issues, Useful cmds
+- [X] Diagnosing issues, Useful cmds, ZBF
 
 ***To-Do***
-- [ ] ZBF & ACLs
+- [ ] ACLs
 - [ ] Device auth.
 - [ ] RIPv2
 - [ ] GRE/IPSEC
