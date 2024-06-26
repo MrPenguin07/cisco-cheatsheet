@@ -1,4 +1,5 @@
 # Cisco Cheatsheet
+## PRs with additional topics or changes are welcome!
 ### Cisco CLI Reference, Howtos, and Tools
 
 Credit to the original author [@grplyler](https://github.com/grplyler)  
